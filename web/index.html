@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DiskPie — 磁碟空間圓餅圖</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <h1>DiskPie</h1>
+  </div>
+
+  <div class="controls">
+    <label class="field">
+      <span>掃描目標</span>
+      <select id="drive-select"></select>
+    </label>
+    <label class="field grow">
+      <span>或指定資料夾</span>
+      <input id="path-input" type="text" placeholder="例如 D:\專案" spellcheck="false">
+    </label>
+    <button id="scan-btn" class="btn primary">開始掃描</button>
+    <button id="cancel-btn" class="btn" hidden>停止</button>
+    <button id="theme-btn" class="btn icon" title="切換深／淺色">◐</button>
+  </div>
+</header>
+
+<div id="status" class="status" hidden>
+  <div class="status-line">
+    <span class="spinner" aria-hidden="true"></span>
+    <strong id="status-title">掃描中…</strong>
+    <span id="status-numbers" class="mono"></span>
+  </div>
+  <div id="status-current" class="status-current mono"></div>
+</div>
+
+<main id="main" hidden>
+  <nav id="breadcrumb" class="breadcrumb" aria-label="路徑"></nav>
+
+  <section class="panels">
+    <!-- 圓餅圖 -->
+    <div class="card chart-card">
+      <div class="card-head">
+        <h2 id="chart-title">—</h2>
+        <div class="card-actions">
+          <button id="up-btn" class="btn small">↑ 上一層</button>
+          <button id="root-btn" class="btn small">回根目錄</button>
+        </div>
+      </div>
+
+      <div class="chart-wrap">
+        <svg id="pie" viewBox="0 0 420 360" role="img" aria-labelledby="chart-title">
+          <g id="slices"></g>
+          <g id="slice-labels" class="slice-labels" aria-hidden="true"></g>
+        </svg>
+        <div id="center" class="center">
+          <div id="center-label" class="center-label">總計</div>
+          <div id="center-value" class="center-value">—</div>
+          <div id="center-sub" class="center-sub"></div>
+        </div>
+        <div id="tooltip" class="tooltip" hidden></div>
+      </div>
+
+      <p class="hint">點圓餅或右側表格的任一資料夾即可展開下一層；點圓心回上一層。</p>
+    </div>
+
+    <!-- 表格檢視（同時也是圖例） -->
+    <div class="card table-card">
+      <div class="card-head">
+        <h2>本層明細</h2>
+        <div class="card-actions">
+          <button id="open-btn" class="btn small">在檔案總管開啟</button>
+          <button id="rescan-btn" class="btn small">重新掃描此層</button>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table id="table">
+          <thead>
+            <tr>
+              <th scope="col">名稱</th>
+              <th scope="col" class="num">大小</th>
+              <th scope="col" class="num">占比</th>
+              <th scope="col" class="barcol"></th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+
+      <details id="files-block" class="files">
+        <summary>本層最大的檔案 <span id="files-count" class="muted"></span></summary>
+        <table class="files-table">
+          <tbody id="files-tbody"></tbody>
+        </table>
+      </details>
+    </div>
+  </section>
+</main>
+
+<div id="empty" class="empty">
+  <p>選一個磁碟，按「開始掃描」。</p>
+  <p class="muted">掃整顆系統碟大約需要 1–3 分鐘，之後在各層之間切換都是即時的。</p>
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
