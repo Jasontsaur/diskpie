@@ -68,6 +68,10 @@ python diskpie.py C:\
 HTTP 伺服器只綁 `127.0.0.1`，而且每次啟動會產生一組隨機權杖，所有 `/api/*` 請求都必須帶上
 `X-DiskPie-Token`，避免其他網頁在你的瀏覽器裡偷打這個本機服務。
 
+## 授權
+
+MIT License，詳見 [LICENSE](LICENSE)。
+
 ## 檔案結構
 
 ```
